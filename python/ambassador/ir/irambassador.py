@@ -202,6 +202,15 @@ class IRAmbassador (IRResource):
             self.grpc_web.sourced_by(amod)
             ir.save_filter(self.grpc_web)
 
+        if amod and ('enable_grpc_stats' in amod):
+            print('ENABLING GRPC STATS!!!!!!!!')
+            self.grpc_stats = IRFilter(ir=ir, aconf=aconf, kind='ir.grpc_stats', name='grpc_stats',
+                                       config={
+                                           'emit_filter_state': True
+                                       })
+            self.grpc_stats.sourced_by(amod)
+            ir.save_filter(self.grpc_stats)
+
         if amod and ('lua_scripts' in amod):
             self.lua_scripts = IRFilter(ir=ir, aconf=aconf, kind='ir.lua_scripts', name='lua_scripts',
                                         config={'inline_code': amod.lua_scripts})
